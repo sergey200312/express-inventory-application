@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -26,6 +27,22 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
+const mongoDB= 'mongodb+srv://user:user@cluster0.b2xjebv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+mongoose.set("strictQuery", false);
+
+async function main() {
+  try {
+    await mongoose.connect(mongoDB);
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("Error connecting to MongoDB:", err);
+  }
+}
+
+main();
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
