@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+  h1(style='margin-top:5px')= title 
+
+  if game_list.length 
+    ul 
+      each game in game_list 
+        li 
+          a(href=game.url) #{game.name}
+          | #{game.author.name}
+  else 
+    p1 Список игр пуст  
+

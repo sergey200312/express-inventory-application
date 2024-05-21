@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.get('/', gameController.index)
 
+router.get('/game', gameController.game_list)
+
 module.exports = router;
