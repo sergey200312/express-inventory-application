@@ -1,7 +1,7 @@
 extends layout 
 
 block content 
-  h1= title 
+  h1(style='margin-top:20px')= title 
   if author_list.length 
     ul 
       each author in author_list 
