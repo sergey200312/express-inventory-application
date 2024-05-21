@@ -24,5 +24,5 @@ exports.index = asyncHandler(async(req, res, next) => {
 
 exports.game_list = asyncHandler(async(req, res, next) => {
     const allGames = await Game.find().sort({name: 1}).populate('author').exec();
-    res.render('game_list', { title: "Информация об играх", game_list: allGames });
+    res.render('game_list', { title: "Список игр", game_list: allGames });
 })
