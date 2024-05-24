@@ -26,3 +26,11 @@ exports.game_list = asyncHandler(async(req, res, next) => {
     const allGames = await Game.find().sort({name: 1}).populate('author').exec();
     res.render('game_list', { title: "Список игр", game_list: allGames });
 })
+
+exports.game_detail = asyncHandler(async(req, res, next) => {
+    const gameDetail = await Game.findById(req.params.id)
+                                    .populate("genre")
+                                    .populate("author")
+                                    .exec();
+    res.render("game_detail", {title: gameDetail.name, game_detail: gameDetail });
+})
