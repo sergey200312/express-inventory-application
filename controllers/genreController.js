@@ -6,3 +6,8 @@ exports.genre_list = asyncHandler(async(req, res, next) => {
     res.render('genre_list', {title: 'Список жанров', genre_list: allGenres})
 })
 
+exports.genre_detail = asyncHandler(async(req, res, next) => {
+    const genreDetail = await Genre.findById(req.params.id).exec();
+    res.render("genre_detail", {genre_detail: genreDetail});
+})
+

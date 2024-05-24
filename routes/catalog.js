@@ -13,4 +13,9 @@ router.get('/genres', genreController.genre_list);
 
 router.get('/authors', authorController.author_list);
 
+router.get('/game/:id', gameController.game_detail);
+
+router.get('/genre/:id', genreController.genre_detail);
+
+
 module.exports = router;
