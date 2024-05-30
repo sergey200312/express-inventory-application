@@ -1,0 +1,33 @@
+extends layout 
+
+block content 
+  h1 Форма создания продукта
+  form(method='POST')
+    div.form-group
+      label(for='name') Название:
+      input#name.form-control(type='text', placeholder='Название продукта' name='name' required value=(item ? item.name : ''))
+      
+      label(style='margin-top:10px' for='description') Описание: 
+      textarea#description.form-control(name='description', placeholder='Описание...' required)= item ? item.description : ''
+      
+      label(style='margin-top:10px' for='price') Стоимость:
+      input#price.form-control(type='text', placeholder='Стоимость...' name='price' required value=(item ? item.price : ''))
+      
+      label(style='margin-top:10px' for='weight') Вес:
+      input#weight.form-control(type='text', placeholder='Вес...' name='weight' required value=(item ? item.weight : ''))
+      
+      label(for='category') Категория:
+      select#category.form-control(name='category' required)
+        option(value='') --Выберите категорию--
+        each category in categories
+          if item && item.genre && item.genre.toString() === category._id.toString()
+            option(value=category._id selected)= category.name
+          else
+            option(value=category._id)= category.name
+      
+      button.btn.btn-primary(style='margin-top:10px' type='submit') Создать
+    
+    if errors 
+      ul 
+        each error in errors 
+          li= error.msg

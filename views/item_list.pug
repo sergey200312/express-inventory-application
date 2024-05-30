@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+  h2(style='margin-top:20px')= title 
+  if item_list.length 
+    ul.item-list
+      each item in item_list 
+        li 
+          a(href=item.url) #[p #{item.name}] 
+          p #[strong Стоимость:] $#{item.price}
+          p #[strong Категория:] #{item.genre[0].name}
+  else 
+    p1 Список авторов пуст

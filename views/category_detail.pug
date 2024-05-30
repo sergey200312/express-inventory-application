@@ -1,0 +1,21 @@
+extends layout 
+
+block content 
+
+  h2(style='margin-top:20px') Товар: #{category_name.name}
+
+  if category_detail.length 
+    ul 
+      each category in category_detail 
+        li 
+          a(href=category.url) #{category.name} 
+  
+  else 
+    p Товары в этой категории отсутствуют
+
+
+  hr
+  p 
+    a(href=category_name.url + '/update') Обновить категорию
+  p 
+    a(href=category_name.url + '/delete') Удалить категорию

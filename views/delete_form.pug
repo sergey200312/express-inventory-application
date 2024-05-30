@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+  h2 #{item.name}
+  p Вы действительно хотите удалить данный продукт?
+
+  form(method='POST')
+    div.form-group
+      input.form-control(type="hidden", name="itemid" value=item._id)
+      button.btn.btn-primary(type='submit') Удалить

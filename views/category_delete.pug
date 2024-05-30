@@ -1,0 +1,20 @@
+extends layout 
+
+block content 
+
+  h2(style='margin-top:20px') Категория: #{category_name.name}
+
+  if category_detail.length 
+    p Для того, чтобы удалить категорию, нужно сначала удалить данные продукты
+    ul 
+      each category in category_detail 
+        li 
+          a(href=category.url) #{category.name} 
+  
+  else 
+    p Вы действительное хотите удалить эту категорию?
+    form(method="POST")
+      div.form-group
+        input.form-control(type='hidden', name='categoryid' value=category_name._id)
+      button.btn.btn-primary(type='submit') Удалить
+      

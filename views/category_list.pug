@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+  h2(style='margin-top:20px')= title 
+
+  if category_list.length 
+    ul.category-list 
+      each category in category_list 
+        li 
+          a(href=category.url) #{category.name}
+  else 
+    p1 Список категорий пуст
+

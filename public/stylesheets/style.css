@@ -3,3 +3,64 @@
   padding: 0;
   list-style: none;
 }
+html{
+  height: 100%;
+}
+
+.container-fluid, .row {
+  height: 100%;
+}
+
+
+.sidebar {
+  background-color: black;
+  padding: 15px;
+  color: white;
+  height: 100;
+}
+
+.sidebar-nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.category-list a {
+  color:black;
+  text-decoration: none;
+}
+.item-list,
+.category-list {
+  list-style: none; /* Убираем маркеры у списка */
+  padding: 0; /* Убираем отступы у списка */
+}
+
+.item-list li,
+.category-list li {
+  border: 1px solid #ccc; /* Граница для каждого элемента */
+  border-radius: 25px; /* Закругляем углы */
+  padding: 10px; /* Добавляем отступы вокруг каждого элемента */
+  margin-bottom: 10px; /* Добавляем отступ между элементами */
+}
+
+.item-list li a {
+  text-decoration: none; /* Убираем подчеркивание у ссылок */
+  color: #333; /* Цвет текста ссылок */
+}
+
+.item-list li a:hover {
+  color: #007bff; /* Цвет текста ссылок при наведении курсора */
+}
+
+.sidebar-nav a:hover {
+  color: lightgray;
+}
+
+body {
+  font-family: 'Arial', 'Verdana', sans-serif;
+  height: 100%;
+}
+
+
+a:hover {
+  color: darkblue;
+}

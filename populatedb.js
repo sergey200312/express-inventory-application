@@ -3,14 +3,12 @@ console.log(
   );
   
   const userArgs = process.argv.slice(2);
+
+  const Item = require("./models/item");
+  const Category = require("./models/category");
   
-  const Game = require("./models/game");
-  const Author = require("./models/author");
-  const Genre = require("./models/genre");
-  
-  const genres = [];
-  const authors = [];
-  const games = [];
+  const items = [];
+  const categories = [];
   
   const mongoose = require("mongoose");
   mongoose.set("strictQuery", false);
@@ -23,112 +21,135 @@ console.log(
     console.log("Debug: About to connect");
     await mongoose.connect(mongoDB);
     console.log("Debug: Should be connected?");
-    await createGenres();
-    await createAuthors();
-    await createGames();
+    await createCategories();
+    await console.log(categories);
+    await createItems();
+    await console.log(items);
     console.log("Debug: Closing mongoose");
     mongoose.connection.close();
   }
   
 
-  async function genreCreate(index, name, description) {
-    const genre = new Genre({ name: name, description: description });
-    await genre.save();
-    genres[index] = genre;
+  async function createCategory(index, name) {
+    const category = new Category({ name: name});
+    await category.save();
+    categories[index] = category;
     console.log(`Added genre: ${name}`);
   }
   
-  async function authorCreate(index, name) {
-    const authordetail = { name: name };
+ 
   
-    const author = new Author(authordetail);
-  
-    await author.save();
-    authors[index] = author;
-    console.log(`Added author: ${name}`);
-  }
-  
-  async function gameCreate(index, name, description, year_of_release, price, genre, author) {
-    const gamedetail = {
+  async function itemCreate(index, name, description, price, weight, inStock, category) {
+    const itemdetail = {
       name: name, 
       description: description,
-      year_of_release: year_of_release, 
       price: price, 
-      genre: genre,
-      author: author,
+      weight: weight,
+      inStock: inStock,
+      genre: category,
     };
   
-    const game = new Game(gamedetail);
-    await game.save();
-    games[index] = game;
+    const item = new Item(itemdetail);
+    await item.save();
+    items[index] = item;
     console.log(`Added book: ${name}`);
   }
   
 
   
-  async function createGenres() {
-    console.log("Adding genres");
+  async function createCategories() {
+    console.log("Adding categories");
     await Promise.all([
-      genreCreate(0, "Ролевые игры", "Игроки управляют персонажами в вымышленном мире," +
-       "принимая на себя роли этих персонажей и следуя сюжету, который часто включает выполнение квестов и борьбу с врагами. Развитие персонажа и накопление опыта играют ключевую роль."),
-      genreCreate(1, "Шутеры от первого лица", "Игры, в которых игрок видит мир через глаза персонажа и основное внимание уделяется стрельбе и боевым действиям. Обычно требуют быстрых рефлексов и точности."),
-      genreCreate(2, "Стратегии в реальном времени", "Игроки управляют армиями и базами, собирают ресурсы и строят структуры в реальном времени. Основное внимание уделяется тактическому планированию и управлению ресурсами."),
+      createCategory(0, "Смартфоны"),
+      createCategory(1, "Ноутбуки"),
+      createCategory(2, "Телевизоры"),
+      createCategory(3, "Камеры"),
     ]);
   }
   
-  async function createAuthors() {
-    console.log("Adding authors");
-    await Promise.all([
-      authorCreate(0, "CD Projekt Red"),
-      authorCreate(1, "Bethesda Game Studios"),
-      authorCreate(2, "Infinity Ward, Treyarch"),
-      authorCreate(3, "Valve"),
-      authorCreate(4, "Blizzard Entertainment"),
-    ]);
-  }
   
-  async function createGames() {
-    console.log("Adding Books");
+  async function createItems() {
+    console.log("Adding categories");
     await Promise.all([
-      gameCreate(0,
-        "The Witcher",
-        "Игра основана на сериях книг Анджея Сапковского, где игрок управляет ведьмаком Геральтом из Ривии, выполняя квесты и борясь с чудовищами.",
-        "2015-05-19",
-        "2000",
-        authors[0],
-        [genres[0]]
+      itemCreate(0,
+        "iPhone 13 Pro",
+        "Последняя модель iPhone с 6.1-дюймовым дисплеем Super Retina XDR, тройной камерой с ночным режимом и процессором A15 Bionic.",
+        "999",
+        "204",
+        "true",
+        categories[0],
       ),
-      gameCreate(1,
-        "The Elder Scrolls V: Skyrim",
-        "Пятая часть серии The Elder Scrolls, открытый мир фэнтези, где игрок может исследовать мир, выполнять квесты и развивать своего персонажа.",
-        "2011-11-11",
-        "2500",
-        authors[1],
-        [genres[0]]
+      itemCreate(1,
+        "Samsung Galaxy S21",
+        "Флагманский смартфон от Samsung с 6.2-дюймовым дисплеем Dynamic AMOLED 2X, тройной камерой и процессором Exynos 2100.",
+        "799",
+        "169",
+        "true",
+        categories[0]
       ),
-      gameCreate(2,
-        "Call of Duty: Modern Warfare",
-        "Популярная часть серии военных шутеров, предлагающая как одиночную кампанию, так и многопользовательский режим.",
-        "2019-10-25",
-        "3000",
-        authors[2],
-        [genres[1]]
+      itemCreate(2,
+        "Xiaomi Mi 11",
+        "Высокопроизводительный смартфон с 6.81-дюймовым дисплеем AMOLED, тройной камерой и процессором Snapdragon 888.",
+        "749",
+        "196",
+        "false",
+        categories[0]
       ),
-      gameCreate(3,
-        "Counter-Strike ",
-        "Тактический командный шутер, в котором террористы и контртеррористы сражаются в различных режимах.",
-        "2000-11-09",
-        "3000",
-        authors[3],
-        [genres[1]]
+      itemCreate(3,
+        "MacBook Air",
+        "Тонкий и легкий ноутбук от Apple с 13.3-дюймовым Retina дисплеем, процессором Apple M1 и длительным временем автономной работы.",
+        "999",
+        "1290",
+        "true",
+        categories[1]
       ),
-      gameCreate(4,
-        "StarCraft",
-        "Космическая стратегия, где три расы борются за господство в галактике.",
-        "1998-03-31",
-        "2400",
-        authors[4],
-        [genres[2]]
+      itemCreate(4,
+        "Lenovo ThinkPad X1 Carbon",
+        "Надежный и производительный ноутбук с 14-дюймовым дисплеем, процессором Intel Core i7 и длительным временем автономной работы.",
+        "1499",
+        "1090",
+        "false",
+        categories[1]
+      ),
+      itemCreate(5,
+        "Dell XPS 13",
+        "Компактный и мощный ноутбук с 13.4-дюймовым дисплеем InfinityEdge, процессором Intel Core i7 и SSD на 512 ГБ.",
+        "1190",
+        "1200",
+        "true",
+        categories[1]
+      ),
+      itemCreate(6,
+        "Samsung QLED 4K",
+        "55-дюймовый 4K телевизор с технологией QLED, поддержкой HDR и интеллектуальной платформой Samsung Smart TV.",
+        "899",
+        "17200",
+        "true",
+        categories[2]
+      ),
+      itemCreate(7,
+        "LG OLED CX",
+        "55-дюймовый 4K OLED телевизор с невероятной контрастностью, поддержкой Dolby Vision и платформой LG webOS.",
+        "1499",
+        "18900",
+        "false",
+        categories[2]
+      ),
+      itemCreate(8,
+        "Canon EOS R5",
+        " Полнокадровая беззеркальная камера с 45-мегапиксельным сенсором, возможностью записи видео в 8K и системой автофокуса Dual Pixel.",
+        "3899",
+        "738",
+        "true",
+        categories[3]
+      ),
+      itemCreate(9,
+        "Sony Alpha a7 III",
+        "Полнокадровая беззеркальная камера с 24-мегапиксельным сенсором, возможностью записи видео в 4K и системой автофокуса Fast Hybrid.",
+        "1999",
+        "650",
+        "false",
+        categories[3]
       )
     ]);
   }
